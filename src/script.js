@@ -1,7 +1,7 @@
 window.onload = iniciar;
 
 let numTarea = 1;
-
+var tareas = [];
 
 function iniciar() {
     let btnAgregar = document.getElementById("btnAgregar");
@@ -10,30 +10,29 @@ function iniciar() {
 
 };
 
-function agregarTarea() {
+function agregarTarea(event) {
+    event.preventDefault();
     let nombre = document.getElementById("txtNombre").value;
     let descripcion = document.getElementById("txtArea").value;
     let tarea = {
-        numTarea: numTarea,
         nombre: nombre,
         descripcion: descripcion,
         estado: true,
     };
-    mostrarTabla(tarea);
-    numTarea++;
-    event.preventDefault();
+    tareas.push(tarea); // Agregar tarea al arreglo
+    mostrarTabla(); // Actualizar tabla con todas las tareas
 };
 
-function mostrarTabla(tarea) {
-    var tabla = document.getElementById("tablaTareas"); 
-    var fila = tabla.insertRow();
-    var celdaNum = fila.insertCell();
-    var celdaNombre = fila.insertCell();
-    var celdaDescripcion = fila.insertCell();
-    var celdaEstado = fila.insertCell();
-
-    celdaNum.textContent = tarea.numTarea;
-    celdaNombre.textContent = tarea.nombre;
-    celdaDescripcion.textContent = tarea.descripcion;
-    celdaEstado.textContent = tarea.estado ? "Completado" : "Pendiente";
+function mostrarTabla() {
+    var tabla = document.getElementById("tablaTareas");
+    tabla.innerHTML = ""; // Limpiar contenido actual de la tabla
+    for (let i = 0; i < tareas.length; i++) {
+        var fila = tabla.insertRow();
+        var celdaNombre = fila.insertCell();
+        var celdaDescripcion = fila.insertCell();
+        var celdaEstado = fila.insertCell();
+        celdaNombre.textContent = tareas[i].nombre;
+        celdaDescripcion.textContent = tareas[i].descripcion;
+        celdaEstado.textContent = tareas[i].estado ? "Completado" : "Pendiente";
+    }
 };
