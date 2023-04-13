@@ -58,11 +58,12 @@ function mostrarTabla() {
     // Botón "Eliminar"
     var btnEliminar = document.createElement("button");
     btnEliminar.type = "button";
-    btnEliminar.classList.add("btn", "btn-sm", "btn-danger");
+    btnEliminar.classList.add("btn", "btn-sm", "btn-danger", "mx-1");
     btnEliminar.textContent = "Eliminar";
     btnEliminar.addEventListener("click", function () {
       // Aquí puedes implementar la lógica para eliminar la tarea
       console.log("Eliminar tarea #" + (i + 1));
+      eliminarTarea(i);
     });
     divBotones.appendChild(btnEliminar);
 
@@ -72,11 +73,14 @@ function mostrarTabla() {
     btnFinalizar.classList.add("btn", "btn-sm", "btn-info");
     btnFinalizar.textContent = "Finalizar";
     btnFinalizar.addEventListener("click", function () {
-      // Aquí puedes implementar la lógica para Finalizar la tarea la tarea
+      finalizarTarea(i);
+      mostrarTabla();
       console.log("Finalizar  tarea #" + (i + 1));
     });
+    if (tareas[i].estado) { // Ocultar botón si la tarea está finalizada
+        btnFinalizar.style.display = "none";
+    }
     divBotones.appendChild(btnFinalizar);
-
 
     // Agregar el elemento div con los botones a la celda de acciones
     celdaAcciones.appendChild(divBotones);
@@ -100,3 +104,12 @@ function limpiarCampos() {
   document.getElementById("txtNombre").value = "";
   document.getElementById("txtArea").value = "";
 }
+
+function eliminarTarea(id) {
+  tareas.splice(id, 1); // Eliminar tarea del arreglo
+  mostrarTabla(); // Actualizar tabla sin la tarea eliminada
+}
+function finalizarTarea(id) {
+    tareas[id].estado = true; // Marcar tarea como finalizada
+    mostrarTabla(); // Actualizar tabla con la tarea finalizada
+  }
