@@ -16,7 +16,7 @@ function agregarTarea(event) {
   let tarea = {
     nombre: nombre,
     descripcion: descripcion,
-    estado: true,
+    estado: false,
   };
   tareas.push(tarea); // Agregar tarea al arreglo
   mostrarTabla(); // Actualizar tabla con todas las tareas
@@ -33,10 +33,53 @@ function mostrarTabla() {
     var celdaNombre = fila.insertCell();
     var celdaDescripcion = fila.insertCell();
     var celdaEstado = fila.insertCell();
+    let celdaAcciones = fila.insertCell();
+
     celdaId.textContent = i + 1;
     celdaNombre.textContent = tareas[i].nombre;
     celdaDescripcion.textContent = tareas[i].descripcion;
     celdaEstado.textContent = tareas[i].estado ? "Completado" : "Pendiente";
+
+    // Crear elemento div para contener los botones
+    var divBotones = document.createElement("div");
+    divBotones.classList.add("btn-group");
+
+    // Botón "Modificar"
+    var btnModificar = document.createElement("button");
+    btnModificar.type = "button";
+    btnModificar.classList.add("btn", "btn-sm", "btn-primary");
+    btnModificar.textContent = "Modificar";
+    btnModificar.addEventListener("click", function () {
+      // Aquí puedes implementar la lógica para modificar la tarea
+      console.log("Modificar tarea #" + (i + 1));
+    });
+    divBotones.appendChild(btnModificar);
+
+    // Botón "Eliminar"
+    var btnEliminar = document.createElement("button");
+    btnEliminar.type = "button";
+    btnEliminar.classList.add("btn", "btn-sm", "btn-danger");
+    btnEliminar.textContent = "Eliminar";
+    btnEliminar.addEventListener("click", function () {
+      // Aquí puedes implementar la lógica para eliminar la tarea
+      console.log("Eliminar tarea #" + (i + 1));
+    });
+    divBotones.appendChild(btnEliminar);
+
+    //boton "finalizar"
+    var btnFinalizar = document.createElement("button");
+    btnFinalizar.type = "button";
+    btnFinalizar.classList.add("btn", "btn-sm", "btn-info");
+    btnFinalizar.textContent = "Finalizar";
+    btnFinalizar.addEventListener("click", function () {
+      // Aquí puedes implementar la lógica para Finalizar la tarea la tarea
+      console.log("Finalizar  tarea #" + (i + 1));
+    });
+    divBotones.appendChild(btnFinalizar);
+
+
+    // Agregar el elemento div con los botones a la celda de acciones
+    celdaAcciones.appendChild(divBotones);
   }
 }
 function cargarNombresColumnas() {
@@ -46,10 +89,12 @@ function cargarNombresColumnas() {
   var celdaNombre = fila.insertCell();
   var celdaDescripcion = fila.insertCell();
   var celdaEstado = fila.insertCell();
+  let celdaAcciones = fila.insertCell();
   celdaId.textContent = "Id";
   celdaNombre.textContent = "Nombre";
   celdaDescripcion.textContent = "descripcion";
   celdaEstado.textContent = "Estado";
+  celdaAcciones.textContent = "Acciones";
 }
 function limpiarCampos() {
   document.getElementById("txtNombre").value = "";
